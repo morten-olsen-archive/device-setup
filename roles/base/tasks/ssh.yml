@@ -1,0 +1,41 @@
+- name: Enable SSH in firewall
+  become: yes
+  community.general.ufw:
+    rule: allow
+    interface: wg0
+    direction: in
+    to_port: '22'
+
+- name: Disable empty password login
+  become: yes
+  lineinfile: 
+    dest: "/etc/ssh/sshd_config" 
+    regexp: '^#?PermitEmptyPasswords' 
+    line: 'PermitEmptyPasswords no'
+
+- name: Disable remote root login
+  become: yes
+  lineinfile: 
+    dest: "/etc/ssh/sshd_config" 
+    regexp: '^#?PermitRootLogin' 
+    line: 'PermitRootLogin no'
+
+- name: Disable password login
+  become: yes
+  lineinfile: 
+    dest: "/etc/ssh/sshd_config" 
+    regexp: '^(#\s*)?PasswordAuthentication '
+    line: 'PasswordAuthentication no'
+
+- name: Start SSHD
+  become: yes
+  ansible.builtin.systemd:
+    state: restarted
+    name: sshd 
+#
+# - name: Enable PAM
+#   lineinfile: 
+#     dest: "/etc/ssh/sshd_config" 
+#     regexp: '^#?UsePAM' 
+#     line: 'UsePAM yes'
+#   notify: restart sshd

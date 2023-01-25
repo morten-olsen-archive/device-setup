@@ -1,0 +1,27 @@
+- include_role:
+    name: utils/install/roles/yay
+
+- include_role:
+    name: utils/install/roles/flatpak
+
+- name: update pacman
+  become: yes
+  pacman:
+    upgrade: yes
+    update_cache: yes
+
+- name: update yay 
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    upgrade: yes
+    update_cache: yes
+    aur_only: yes
+
+- name: update flatpaks
+  become: yes
+  become_user: "{{ current_user }}"
+  shell:
+    cmd: flatpak update --noninteractive --user
+  become: true

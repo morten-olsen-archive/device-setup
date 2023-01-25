@@ -1,0 +1,30 @@
+- set_fact:
+    home: "{{ lookup('env', 'HOME') }}"
+    current_user: "{{ lookup('env', 'USER') }}"
+
+- import_role:
+    name: utils/install
+  vars:
+    names: [openssh, ufw]
+
+- name: Enable firewall
+  become: yes
+  community.general.ufw:
+    state: enabled
+
+- name: Setup user
+  become: yes
+  ansible.builtin.user:
+    name: "{{ current_user }}"
+    home: "{{ home }}"
+
+- include_role:
+    name: apps/bash
+
+- include_role:
+    name: apps/ufw
+
+- include_tasks: ssh.yml
+
+- include_role:
+    name: utils/upgrade

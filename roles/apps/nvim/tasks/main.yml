@@ -1,0 +1,27 @@
+- name: install nvim packages
+  include_role:
+    name: utils/install
+  vars:
+    names:
+      - neovim
+      - ripgrep
+
+- name: Copy nvim shell files
+  become: yes
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.shellrc/rc.d/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - "10-nvim.sh"
+
+- name: Checkout nvim config
+  become: yes
+  become_user: "{{ current_user}}"
+  ansible.builtin.git:
+    repo: "https://github.com/morten-olsen/nvim"
+    dest: "{{ home }}/.config/nvim"
+  environment:
+    HOME: /dev/null

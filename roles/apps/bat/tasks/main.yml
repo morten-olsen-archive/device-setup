@@ -1,0 +1,15 @@
+- import_role:
+    name: utils/install
+  vars:
+    names: [bat]
+
+- name: Copy bat shell files
+  become: yes
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.shellrc/rc.d/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - "02-bat.sh"

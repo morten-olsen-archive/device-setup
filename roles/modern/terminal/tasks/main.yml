@@ -1,0 +1,47 @@
+- import_role:
+    name: utils/install
+  vars:
+    names:
+      - lsd
+      - exa
+      - glow
+      - unzip
+      - jq
+      - socat
+
+- name: Copy bash files
+  become: yes
+  ansible.builtin.copy:
+    src: "rc/{{ item }}"
+    dest: "{{ home }}/.shellrc/rc.d/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - "01-scripts.sh"
+    - "02-alias.sh"
+
+- import_role:
+    name: apps/zsh
+- import_role:
+    name: apps/git
+- import_role:
+    name: apps/gnupg
+- import_role:
+    name: apps/ssh
+- import_role:
+    name: apps/nvm
+- import_role:
+    name: apps/nvim
+- import_role:
+    name: apps/bat
+- import_role:
+    name: apps/fzf
+- import_role:
+    name: apps/tmux
+
+- name: Set user shell
+  become: yes
+  ansible.builtin.user:
+    name: "{{ current_user }}"
+    shell: /bin/zsh

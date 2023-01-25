@@ -1,0 +1,34 @@
+- name: Install SSH package
+  include_role:
+    name: utils/install
+  vars:
+    names: [openssh]
+
+- name: Create ssh script directory
+  become: yes
+  ansible.builtin.file:
+    path: "{{ home }}/.ssh"
+    owner: "root" 
+    group: "root"
+    state: directory
+    mode: '0700'
+
+- name: Create ssh config.d directory
+  become: yes
+  ansible.builtin.file:
+    path: "{{ home }}/.ssh/config.d"
+    owner: "{{ current_user }}" 
+    state: directory
+    mode: '0700'
+
+- name: Copy ssh config files
+  become: yes
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.ssh/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - "config"
+    - "config.d/github"

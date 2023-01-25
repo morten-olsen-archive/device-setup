@@ -1,0 +1,5 @@
+dependencies:
+  - role: apps/bash
+  - role: apps/kitty
+  - role: apps/eww
+  - role: apps/firefox

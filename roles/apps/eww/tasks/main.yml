@@ -1,0 +1,37 @@
+- import_role:
+    name: utils/install
+  vars:
+    names:
+      - socat
+    yay:
+      - eww-wayland
+
+- name: Create config directory
+  become: yes
+  ansible.builtin.file:
+    path: "{{ home }}/.config/{{ item }}"
+    owner: root
+    group: root
+    state: directory
+    mode: '0755'
+  loop:
+    - 'eww'
+    - 'eww/scripts'
+
+- name: Copy eww config files
+  become: yes
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.config/eww/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - 'eww.yuck'
+    - 'eww.scss'
+    - 'scripts/battery'
+    - 'scripts/change-active-workspace'
+    - 'scripts/get-active-workspace'
+    - 'scripts/getram'
+    - 'scripts/getvol'
+    - 'scripts/wifi'

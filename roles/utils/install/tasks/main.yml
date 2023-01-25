@@ -1,0 +1,36 @@
+- include_role:
+    name: utils/install/roles/yay
+  when: yay is defined
+
+- include_role:
+    name: utils/install/roles/flatpak
+  when: flatpak is defined
+
+- name: Install pacman packages
+  become: yes
+  pacman:
+    name: "{{pacman}}"
+  when: pacman is defined
+
+- name: Install system packages
+  become: yes
+  package:
+    name: "{{names}}"
+  when: names is defined
+
+- name: Install yay packages
+  become: yes
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: yay
+    name: "{{yay}}"
+    extra_args: "--noconfirm"
+  when: yay is defined
+
+- name: Install flatpak packages
+  become: yes
+  become_user: "{{ current_user }}"
+  community.general.flatpak:
+    method: "user"
+    name: "{{ flatpak }}"
+  when: flatpak is defined

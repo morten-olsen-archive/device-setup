@@ -1,0 +1,43 @@
+- import_role:
+    name: utils/install
+  vars:
+    names: [zsh]
+
+- name: Copy zsh config files
+  become: yes
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - "zshrc"
+
+- name: Checkout ohmyzsh
+  become: yes
+  become_user: "{{ current_user}}"
+  ansible.builtin.git:
+    repo: 'https://github.com/ohmyzsh/ohmyzsh'
+    dest: "{{ home }}/.oh-my-zsh"
+
+- name: Checkout zsh auto suggest
+  become: yes
+  become_user: "{{ current_user}}"
+  ansible.builtin.git:
+    repo: "https://github.com/zsh-users/zsh-autosuggestions"
+    dest: "{{ home }}/.config/zsh/custom/plugins/zsh-autosuggestions"
+
+- name: Checkout zsh syntax highlight
+  become: yes
+  become_user: "{{ current_user}}"
+  ansible.builtin.git:
+    repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    dest: "{{ home }}/.config/zsh/custom/plugins/zsh-syntax-highlighting"
+
+- name: Checkout zsh vi mode
+  become: yes
+  become_user: "{{ current_user}}"
+  ansible.builtin.git:
+    repo: "https://github.com/jeffreytse/zsh-vi-mode"
+    dest: "{{ home }}/.config/zsh/custom/zsh-vi-mode"

@@ -1,0 +1,4 @@
+- import_role:
+    name: utils/install
+  vars:
+    flatpak: [org.mozilla.firefox]

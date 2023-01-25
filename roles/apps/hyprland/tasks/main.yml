@@ -1,0 +1,57 @@
+- import_role:
+    name: utils/install
+  vars:
+    pacman:
+      - cmake
+      - pkgconf
+      - kitty
+      - sddm
+      - xdg-desktop-portal-gtk
+      - xdg-desktop-portal-wlr
+      - swayidle
+    yay:
+      - hyprland
+      - hyprpaper-git
+      - xdg-desktop-portal-hyprland-git
+      - swaylock-effects-git
+
+- name: Create config directory
+  become: yes
+  ansible.builtin.file:
+    path: "{{ home }}/.config/{{ item }}"
+    owner: root
+    group: root
+    state: directory
+    mode: '0755'
+  loop:
+    - 'hypr'
+    - 'hypr/scripts'
+
+- name: Copy hyprland config files
+  become: yes
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.config/hypr/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - "binds.conf"
+    - "exec.conf"
+    - "general.conf"
+    - "hyprland.conf"
+    - "hyprpaper.conf"
+    - "input.conf"
+    - "scripts/brightness.sh"
+    - "scripts/eww.sh"
+    - "scripts/idle.sh"
+    - "scripts/lock.sh"
+    - "scripts/screensharing.sh"
+    - "scripts/volume.sh"
+
+- name: Start SDDM 
+  become: yes
+  ansible.builtin.systemd:
+    state: started
+    name: sddm
+

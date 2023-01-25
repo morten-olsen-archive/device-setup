@@ -1,0 +1,22 @@
+- import_role:
+    name: utils/install
+  vars:
+    names: [tmux]
+
+- name: Checkout tpm
+  become: yes
+  become_user: "{{ current_user}}"
+  ansible.builtin.git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "{{ home }}/.tmux/plugins/tpm"
+
+- name: Copy tmux config files
+  become: yes
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - "tmux.conf"

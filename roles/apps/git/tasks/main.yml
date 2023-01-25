@@ -1,0 +1,13 @@
+- import_role:
+    name: utils/install
+  vars:
+    names: [git, git-delta]
+
+- name: Copy gitconfig files
+  become: yes
+  ansible.builtin.template:
+    src: gitconfig.j2
+    dest: "{{ home }}/.gitconfig"
+    owner: root 
+    group: root 
+    mode: '0644'
