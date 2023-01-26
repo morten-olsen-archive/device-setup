@@ -32,6 +32,25 @@
   ansible.builtin.systemd:
     state: restarted
     name: sshd 
+
+- name: Create ssh config directory
+  become: yes
+  ansible.builtin.file:
+    path: "{{ home }}/.ssh"
+    owner: "root" 
+    group: "root"
+    state: directory
+    mode: '0755'
+
+- name: Setup authorized keys
+  become: yes
+  ansible.builtin.get_url:
+    url: "https://github.com/{{ github_user }}.keys"
+    dest: "{{ home }}/.ssh/authorized_keys"
+    owner: root
+    group: root
+    mode: '0644'
+  when: github_user is defined
 #
 # - name: Enable PAM
 #   lineinfile: 
