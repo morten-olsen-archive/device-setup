@@ -29,9 +29,20 @@
   loop:
     - 'eww.yuck'
     - 'eww.scss'
+
+- name: Copy eww scripts
+  become: yes
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.config/eww/{{ item }}"
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
     - 'scripts/battery'
     - 'scripts/change-active-workspace'
     - 'scripts/get-active-workspace'
+    - 'scripts/get-workspaces'
     - 'scripts/getram'
     - 'scripts/getvol'
     - 'scripts/wifi'

@@ -1,0 +1,13 @@
+- import_role:
+    name: utils/install
+  vars:
+    names:
+      - lynis
+      - rkhunter
+  
+- import_role:
+    name: utils/install
+  vars:
+    names:
+      - arch-audit
+  

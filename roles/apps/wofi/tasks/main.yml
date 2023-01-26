@@ -1,0 +1,13 @@
+
+- name: install nvim packages
+  include_role:
+    name: utils/install
+  vars:
+    names:
+      - wofi
+- name: Checkout nvim config
+  become: yes
+  become_user: "{{ current_user}}"
+  ansible.builtin.git:
+    repo: "https://github.com/dracula/wofi.git"
+    dest: "{{ home }}/.config/wofi"

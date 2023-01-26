@@ -1,4 +1,5 @@
 collections:
   - name: kewlfft.aur
   - name: community.general
+  - name: devsec.hardening
 

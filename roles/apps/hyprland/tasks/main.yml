@@ -9,11 +9,19 @@
       - xdg-desktop-portal-gtk
       - xdg-desktop-portal-wlr
       - swayidle
+      - grim
+      - slurp
+      - brightnessctl
+      - pavucontrol
+      - wl-clipboard
+      - ttf-firacode-nerd
     yay:
       - hyprland
       - hyprpaper-git
       - xdg-desktop-portal-hyprland-git
+      - sddm-theme-aerial-git
       - swaylock-effects-git
+      - avizo
 
 - name: Create config directory
   become: yes
@@ -42,12 +50,31 @@
     - "hyprland.conf"
     - "hyprpaper.conf"
     - "input.conf"
+
+- name: Copy hyprland scripts
+  become: yes
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/.config/hypr/{{ item }}"
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
     - "scripts/brightness.sh"
     - "scripts/eww.sh"
     - "scripts/idle.sh"
     - "scripts/lock.sh"
     - "scripts/screensharing.sh"
     - "scripts/volume.sh"
+
+- name: Copy sddm theme config
+  become: yes
+  ansible.builtin.copy:
+    src: "theme.conf"
+    dest: "/etc/sddm.conf.d/theme.conf"
+    owner: root
+    group: root
+    mode: '0644'
 
 - name: Start SDDM 
   become: yes

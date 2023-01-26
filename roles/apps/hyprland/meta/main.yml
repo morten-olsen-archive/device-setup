@@ -3,3 +3,4 @@ dependencies:
   - role: apps/kitty
   - role: apps/eww
   - role: apps/firefox
+  - role: apps/wofi

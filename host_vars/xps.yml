@@ -1,0 +1,3 @@
+ansible_host: xps.d.local.olsen.cloud
+battery: yes
+gpu_type: intel

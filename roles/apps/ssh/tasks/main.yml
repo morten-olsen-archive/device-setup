@@ -11,7 +11,7 @@
     owner: "root" 
     group: "root"
     state: directory
-    mode: '0700'
+    mode: '0755'
 
 - name: Create ssh config.d directory
   become: yes

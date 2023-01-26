@@ -5,6 +5,7 @@
     names:
       - neovim
       - ripgrep
+      - unzip
 
 - name: Copy nvim shell files
   become: yes

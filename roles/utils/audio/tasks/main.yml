@@ -1,0 +1,12 @@
+- import_role:
+    name: utils/install
+  vars:
+    names:
+      - pipewire
+      - pipewire-alsa
+      - pipewire-jack
+      - pipewire-pulse
+      - gst-plugin-pipewire
+      - pamixer
+      - wireplumber
+      - alsa-utils
