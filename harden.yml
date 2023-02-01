@@ -1,0 +1,10 @@
+- name: Harden
+ hosts: all
+ become: yes
+ collections:
+   - devsec.hardening
+ roles:
+   - devsec.hardening.os_hardening
+   - devsec.hardening.ssh_hardening
+ vars:
+   os_auditd_enabled: false

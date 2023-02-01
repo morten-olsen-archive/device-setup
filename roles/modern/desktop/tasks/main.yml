@@ -11,7 +11,7 @@
       - com.spotify.Client
       - com.valvesoftware.Steam
       - com.yubico.yubioath
-      - org.darktable.darktable
+        #- org.darktable.darktable
       - org.mozilla.Thunderbird
       - org.signal.Signal
       - org.kde.dolphin

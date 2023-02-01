@@ -1,0 +1,9 @@
+
+- name: Workstation
+  hosts: workstations
+  become: no
+  roles:
+    - utils/upgrade
+    - utils/battery
+    - modern/terminal
+    - modern/desktop

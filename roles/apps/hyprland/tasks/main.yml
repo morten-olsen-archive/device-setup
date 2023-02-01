@@ -67,6 +67,15 @@
     - "scripts/screensharing.sh"
     - "scripts/volume.sh"
 
+- name: Create sddm directory
+  become: yes
+  ansible.builtin.file:
+    path: "/etc/sddm.conf.d"
+    owner: root
+    group: root
+    state: directory
+    mode: '0755'
+
 - name: Copy sddm theme config
   become: yes
   ansible.builtin.copy:
