@@ -2,8 +2,8 @@
   become: yes
   ansible.builtin.file:
     path: "{{ home }}/.shellrc"
-    owner: root
-    group: root
+    owner: "{{ root_user }}" 
+    group: "{{ root_group }}"
     state: directory
     mode: '0755'
 
@@ -11,8 +11,8 @@
   become: yes
   ansible.builtin.file:
     path: "{{ home }}/.shellrc/rc.d"
-    owner: root
-    group: root
+    owner: "{{ root_user }}" 
+    group: "{{ root_group }}"
     state: directory
     mode: '0755'
 
@@ -20,7 +20,7 @@
   become: yes
   ansible.builtin.copy:
     src: bashrc
+    owner: "{{ root_user }}" 
+    group: "{{ root_group }}"
     dest: "{{ home }}/.bashrc"
-    owner: root
-    group: root
     mode: '0644'

@@ -1,17 +1,2 @@
-- import_role:
-    name: utils/install
-  vars:
-    names:
-      - lib32-mesa
-      - lib32-vulkan-icd-loader
-
-- import_role:
-    name: utils/install
-  vars:
-    names:
-      - intel-gpu-tools
-      - intel-media-driver
-      - lib32-vulkan-intel
-      - libva-intel-driver
-      - vulkan-intel
-  when: gpu_type is defined and gpu_type == "intel"
+- include_tasks: ./linux.yml
+  when: linux

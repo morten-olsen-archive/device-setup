@@ -1,17 +1,2 @@
-- import_role:
-    name: utils/install
-  vars:
-    names:
-      - tlp
-      - powertop
-      - upower
-      - acpi
-      - cpupower
-  when: battery is defined and battery == true
-
-- name: Start TLP 
-  become: yes
-  ansible.builtin.systemd:
-    state: restarted
-    name: tlp 
-  when: battery is defined and battery == true
+- include_tasks: ./linux.yml
+  when: linux

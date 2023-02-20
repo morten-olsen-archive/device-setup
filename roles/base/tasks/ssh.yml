@@ -1,5 +1,6 @@
 - name: Enable SSH in firewall
   become: yes
+  when: use_ufw
   community.general.ufw:
     rule: allow
     interface: wg0
@@ -9,26 +10,27 @@
 - name: Disable empty password login
   become: yes
   lineinfile: 
-    dest: "/etc/ssh/sshd_config" 
+    dest: "/private/etc/ssh/sshd_config" 
     regexp: '^#?PermitEmptyPasswords' 
     line: 'PermitEmptyPasswords no'
 
 - name: Disable remote root login
   become: yes
   lineinfile: 
-    dest: "/etc/ssh/sshd_config" 
+    dest: "/private/etc/ssh/sshd_config" 
     regexp: '^#?PermitRootLogin' 
     line: 'PermitRootLogin no'
 
 - name: Disable password login
   become: yes
   lineinfile: 
-    dest: "/etc/ssh/sshd_config" 
+    dest: "/private/etc/ssh/sshd_config" 
     regexp: '^(#\s*)?PasswordAuthentication '
     line: 'PasswordAuthentication no'
 
 - name: Start SSHD
   become: yes
+  when: use_systemd
   ansible.builtin.systemd:
     state: restarted
     name: sshd 
@@ -37,8 +39,8 @@
   become: yes
   ansible.builtin.file:
     path: "{{ home }}/.ssh"
-    owner: "root" 
-    group: "root"
+    owner: "{{ root_user }}" 
+    group: "{{ root_group }}" 
     state: directory
     mode: '0755'
 
@@ -47,14 +49,14 @@
   ansible.builtin.get_url:
     url: "https://github.com/{{ github_user }}.keys"
     dest: "{{ home }}/.ssh/authorized_keys"
-    owner: root
-    group: root
+    owner: "{{ root_user }}" 
+    group: "{{ root_group }}" 
     mode: '0644'
   when: github_user is defined
 #
 # - name: Enable PAM
 #   lineinfile: 
-#     dest: "/etc/ssh/sshd_config" 
+#     dest: "/private/etc/ssh/sshd_config" 
 #     regexp: '^#?UsePAM' 
 #     line: 'UsePAM yes'
 #   notify: restart sshd

@@ -4,8 +4,8 @@
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ home }}/.shellrc/rc.d/{{ item }}"
-    owner: root
-    group: root
+    owner: "{{ root_user }}"
+    group: "{{ root_group }}"
     mode: '0644'
   loop:
     - "01-nvm.sh"
@@ -13,14 +13,13 @@
 
 - name: Checkout nvm 
   become: yes
-  become_user: "{{ current_user}}"
+  become_user: "{{ current_user }}"
   ansible.builtin.git:
     repo: 'https://github.com/nvm-sh/nvm'
     dest: "{{ home }}/.nvm"
 
 - name: Install node
   become: yes
-  become_user: "{{ current_user}}"
+  become_user: "{{ current_user }}"
   shell: 
-    cmd: |
-      source {{ home }}/.nvm/nvm.sh && nvm install 18
+    cmd: source {{ home }}/.nvm/nvm.sh && nvm install 18

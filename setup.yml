@@ -2,8 +2,12 @@
 - name: Workstation
   hosts: workstations
   become: no
-  roles:
-    - utils/upgrade
-    - utils/battery
-    - modern/terminal
-    - modern/desktop
+  tasks:
+    - include_role:
+        name: utils/upgrade
+    - include_role:
+        name: utils/battery
+    - include_role:
+        name: modern/terminal
+    - include_role:
+        name: modern/desktop

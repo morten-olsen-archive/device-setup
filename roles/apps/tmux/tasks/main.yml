@@ -15,8 +15,8 @@
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ home }}/.{{ item }}"
-    owner: root
-    group: root
+    owner: "{{ root_user }}"
+    group: "{{ root_group }}"
     mode: '0644'
   loop:
     - "tmux.conf"

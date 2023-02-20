@@ -1,14 +1,17 @@
 - include_role:
     name: utils/install/roles/yay
+  when: archlinux
 
 - include_role:
     name: utils/install/roles/flatpak
+  when: archlinux
 
 - name: update pacman
   become: yes
   pacman:
     upgrade: yes
     update_cache: yes
+  when: archlinux
 
 - name: update yay 
   become: yes
@@ -18,6 +21,7 @@
     upgrade: yes
     update_cache: yes
     aur_only: yes
+  when: archlinux
 
 - name: update flatpaks
   become: yes
@@ -25,3 +29,14 @@
   shell:
     cmd: flatpak update --noninteractive --user
   become: true
+  when: archlinux
+
+- name: update brew 
+  become: yes
+  become_user: "{{ current_user }}"
+  community.general.homebrew:
+    upgrade_all: true
+    update_homebrew: true
+  become: true
+  when: macos 
+

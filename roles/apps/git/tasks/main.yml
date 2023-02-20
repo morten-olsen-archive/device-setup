@@ -8,6 +8,6 @@
   ansible.builtin.template:
     src: gitconfig.j2
     dest: "{{ home }}/.gitconfig"
-    owner: root 
-    group: root 
+    owner: "{{ root_user }}"
+    group: "{{ root_group }}"
     mode: '0644'

@@ -1,14 +1,30 @@
 - set_fact:
     home: "{{ lookup('env', 'HOME') }}"
     current_user: "{{ lookup('env', 'USER') }}"
+    root_group: "admin"
+    root_user: "root"
+    install_user: "root"
+    use_systemd: "{{ansible_distribution == 'Arch Linux'}}"
+    linux: "{{ansible_distribution == 'Arch Linux'}}"
+    archlinux: "{{ansible_distribution == 'Arch Linux'}}"
+    macos: "{{ansible_distribution == 'MacOSX'}}"
+    use_ufw: no
+    path_sshd: "/etc/ssh/sshd_config"
+
+- set_fact:
+    install_user: "{{ current_user }}"
+    path_sshd: "/private/etc/ssh/sshd_config"
+  when: macos
 
 - import_role:
     name: utils/install
+  when: linux
   vars:
     names: [openssh, ufw]
 
 - name: Setup user
   become: yes
+  when: linux
   ansible.builtin.user:
     name: "{{ current_user }}"
     home: "{{ home }}"
@@ -18,13 +34,12 @@
 
 - include_role:
     name: apps/ufw
+  when: linux
 
 - include_tasks: ssh.yml
 
 - name: Enable firewall
   become: yes
+  when: use_ufw
   community.general.ufw:
     state: enabled
-
-- include_role:
-    name: utils/upgrade

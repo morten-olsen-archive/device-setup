@@ -16,8 +16,8 @@
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ home }}/.gnupg/{{ item }}"
-    owner: root
-    group: root
+    owner: "{{ root_user }}"
+    group: "{{ root_group }}"
     mode: '0644'
   loop:
     - "gpg.conf"
@@ -28,8 +28,8 @@
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ home }}/.shellrc/rc.d/{{ item }}"
-    owner: root
-    group: root
+    owner: "{{ root_user }}"
+    group: "{{ root_group }}"
     mode: '0644'
   loop:
     - "10-gpg-agent.sh"

@@ -1,0 +1,8 @@
+- import_role:
+    name: apps/kitty
+- community.general.homebrew_cask:
+    greedy: true
+    name:
+      - firefox
+      - slack
+      - signal

@@ -2,3 +2,5 @@
     name: utils/install
   vars:
     names: [ufw]
+- set_fact:
+    use_ufw: "{{ Yes }}"

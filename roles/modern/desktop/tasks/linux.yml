@@ -1,0 +1,18 @@
+- import_role:
+    name: apps/hyprland
+- include_role:
+    name: utils/install
+  vars:
+    flatpak:
+      - com.valvesoftware.Steam
+      - ch.protonmail.protonmail-bridge
+      - com.obsproject.Studio
+      - com.slack.Slack
+      - com.spotify.Client
+      - com.valvesoftware.Steam
+      - com.yubico.yubioath
+        #- org.darktable.darktable
+      - org.mozilla.Thunderbird
+      - org.signal.Signal
+      - org.kde.dolphin
+      - org.gimp.GIMP

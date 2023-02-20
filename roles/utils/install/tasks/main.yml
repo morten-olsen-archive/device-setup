@@ -1,4 +1,4 @@
-- import_role:
+- include_role:
     name: utils/install/roles/yay
   when: yay is defined
 
@@ -14,6 +14,7 @@
 
 - name: Install system packages
   become: yes
+  become_user: "{{  install_user }}"
   package:
     name: "{{names}}"
   when: names is defined
@@ -25,10 +26,7 @@
     use: yay
     name: "{{yay}}"
     extra_args: "--noconfirm"
-  when: yay is defined
-
-- debug:
-    msg: "yay {{yay}}"
+  when: yay is defined and archlinux
 
 - name: Install flatpak packages
   become: yes
@@ -36,4 +34,4 @@
   community.general.flatpak:
     method: "user"
     name: "{{ flatpak }}"
-  when: flatpak is defined
+  when: flatpak is defined and linux

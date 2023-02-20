@@ -14,8 +14,8 @@
   ansible.builtin.copy:
     src: "rc/{{ item }}"
     dest: "{{ home }}/.shellrc/rc.d/{{ item }}"
-    owner: root
-    group: root
+    owner: "{{ root_user }}"
+    group: "{{ root_group }}"
     mode: '0644'
   loop:
     - "01-scripts.sh"
