@@ -2,25 +2,25 @@
     name: utils/install
   vars:
     names:
-      - kitty 
+      - kitty
 
 - name: Create config directory
   become: yes
   ansible.builtin.file:
     path: "{{ home }}/.config/{{ item }}"
-    owner: root
-    group: root
+    owner: "{{ root_user }}"
+    group: "{{ root_group }}"
     state: directory
-    mode: '0755'
+    mode: "0755"
   loop:
-    - 'kitty'
+    - "kitty"
 - name: Copy hyprland config files
   become: yes
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ home }}/.config/kitty/{{ item }}"
-    owner: root
-    group: root
-    mode: '0644'
+    owner: "{{ root_user }}"
+    group: "{{ root_group }}"
+    mode: "0644"
   loop:
     - "kitty.conf"

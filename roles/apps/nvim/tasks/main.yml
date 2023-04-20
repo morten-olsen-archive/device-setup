@@ -14,7 +14,7 @@
     dest: "{{ home }}/.shellrc/rc.d/{{ item }}"
     owner: "{{ root_user }}"
     group: "{{ root_group }}"
-    mode: '0644'
+    mode: "0644"
   loop:
     - "10-nvim.sh"
 
@@ -22,7 +22,16 @@
   become: yes
   become_user: "{{ current_user}}"
   ansible.builtin.git:
-    repo: "https://github.com/morten-olsen/nvim"
+    repo: "https://github.com/AstroNvim/AstroNvim"
     dest: "{{ home }}/.config/nvim"
+  environment:
+    HOME: /dev/null
+
+- name: Checkout astro vim user config
+  become: yes
+  become_user: "{{ current_user}}"
+  ansible.builtin.git:
+    repo: "https://github.com/morten-olsen/astrovim"
+    dest: "{{ home }}/.config/nvim/lua/user"
   environment:
     HOME: /dev/null
